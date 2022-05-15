@@ -1,6 +1,6 @@
 package com.demo.mvc;
 
-import com.demo.mvc.dto.User;
+import com.demo.mvc.dto.UserDTO;
 import com.demo.mvc.mapper.UserMapper;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,9 +28,11 @@ public class DemoMvcApplicationTests {
     @Test
     public void testSelect() {
         System.out.println("----- selectAll method test ------");
-        List<User> userList = userMapper.selectList(null);
+        List<UserDTO> userList = userMapper.selectList(null);
         Assert.assertEquals(5, userList.size());
         userList.forEach(System.out::println);
     }
+
+
 }
 

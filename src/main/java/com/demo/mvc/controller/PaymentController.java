@@ -9,6 +9,8 @@ import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.demo.mvc.config.AlipayConfig;
 import com.demo.mvc.dto.ProductDTO;
 import com.demo.mvc.dto.TradeDTO;
+import com.demo.mvc.service.OrderService;
+import com.demo.mvc.service.PaymentService;
 import com.demo.mvc.service.ProductService;
 import com.demo.mvc.utils.IdUtils;
 import org.slf4j.Logger;
@@ -32,11 +34,13 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/pay")
-public class PaymentController {
+public class PaymentController extends BaseControler{
     private final static Logger LOG = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     private ProductService productService;
+    @Autowired
+    private OrderService orderService;
     @Autowired
     private AlipayClient alipayClient;
     
@@ -50,8 +54,8 @@ public class PaymentController {
         TradeDTO tradeDTO = new TradeDTO();
         tradeDTO.setAmount(productDTO.getPrice());
         tradeDTO.setProductCode(productDTO.getProductCode());
-        tradeDTO.setSubject(productDTO.getDesrciption());
-        tradeDTO.setTradeNo(IdUtils.getSeq("TX-"));
+        tradeDTO.setSubject(productDTO.getDescription());
+        tradeDTO.setTradeNo(IdUtils.getSeq("I"));
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("pay");

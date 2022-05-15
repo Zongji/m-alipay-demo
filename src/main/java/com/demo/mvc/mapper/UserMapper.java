@@ -1,7 +1,7 @@
 package com.demo.mvc.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.demo.mvc.dto.User;
+import com.demo.mvc.dto.UserDTO;
 
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends BaseMapper<UserDTO> {
 }

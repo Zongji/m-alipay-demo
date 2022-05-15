@@ -1,13 +1,19 @@
 package com.demo.mvc.dto;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
-public class ProductDTO {
+@TableName("product")
+public class ProductDTO{
+    private Long id;
+    private String name;
     private String productCode;
+    private String categoryCode;
     private BigDecimal price;
-    private String desrciption;
+    private String description;
+    private int stock;
 }
