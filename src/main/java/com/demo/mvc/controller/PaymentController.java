@@ -2,7 +2,6 @@ package com.demo.mvc.controller;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.domain.AlipayTradeWapPayModel;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
@@ -10,7 +9,6 @@ import com.demo.mvc.config.AlipayConfig;
 import com.demo.mvc.dto.ProductDTO;
 import com.demo.mvc.dto.TradeDTO;
 import com.demo.mvc.service.OrderService;
-import com.demo.mvc.service.PaymentService;
 import com.demo.mvc.service.ProductService;
 import com.demo.mvc.utils.IdUtils;
 import org.slf4j.Logger;
@@ -21,7 +19,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;

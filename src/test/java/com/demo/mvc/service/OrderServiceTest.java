@@ -2,6 +2,7 @@ package com.demo.mvc.service;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.demo.mvc.dto.OrderDTO;
 import com.demo.mvc.dto.ProductDTO;
 import com.demo.mvc.dto.UserDTO;
@@ -28,7 +29,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 @MapperScan("com.demo.mvc.mapper")
 @Transactional
-@Rollback
+//@Rollback
 @Slf4j
 public class OrderServiceTest extends TestCase {
     @Autowired
@@ -58,5 +59,11 @@ public class OrderServiceTest extends TestCase {
         log.info(productDTO.toString());
 
         OrderDTO orderDTO = orderService.addOrder(userDTO, productDTO);
+    }
+
+    @Test
+    public void testQueryOrders() {
+        Page<OrderDTO> page = orderService.queryOrders("", 1, 10);
+        log.info(page.getRecords().toString());
     }
 }

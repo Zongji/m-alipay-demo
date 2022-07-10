@@ -14,18 +14,14 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-//    public ProductDTO getProductByCode(String code) {
-//        ProductDTO dto = new ProductDTO();
-//        dto.setProductCode(code);
-//        dto.setDescription("测试商品， setDescriptionb  ,mjhkug jukjn h, ");
-//        dto.setPrice(new BigDecimal("10.5"));
-//        return dto;
-//    }
-
     public ProductDTO getProductByCode(String code) {
         QueryWrapper<ProductDTO> queryWrapper = new QueryWrapper<>();
         ProductDTO dto = productMapper.selectOne(queryWrapper);
         Assert.isNull(dto, "product is null");
         return dto;
+    }
+
+    public ProductDTO saveProduct() {
+        return null;
     }
 }
