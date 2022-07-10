@@ -7,6 +7,7 @@ import com.demo.mvc.mapper.ProductMapper;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
@@ -26,14 +27,13 @@ public class ProductServiceTest extends TestCase {
     private ProductMapper productMapper;
 
     @Test
-    @Before
     public void insert() {
         System.out.println("----- selectAll method test ------");
         ProductDTO productDTO = new ProductDTO();
         productDTO.setPrice(new BigDecimal("20.5"));
-        productDTO.setProductCode("Abv0d3003");
+        productDTO.setProductCode("P"+System.currentTimeMillis());
         productDTO.setDescription("商品详情测试测试");
-        productDTO.setName("iphone 12");
+        productDTO.setName("iphone 12_" + System.currentTimeMillis());
         int res = productMapper.insert(productDTO);
         Assert.assertEquals(1, res);
     }
@@ -42,7 +42,7 @@ public class ProductServiceTest extends TestCase {
     public void selectList() {
         System.out.println("----- selectAll method test ------");
         QueryWrapper<ProductDTO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("name", "iphone 12");
+        queryWrapper.eq("name", "iphone 12_1657113535414");
         List<ProductDTO> userList = productMapper.selectList(queryWrapper);
         Assert.assertEquals(1, userList.size());
         userList.forEach(System.out::println);
@@ -50,5 +50,9 @@ public class ProductServiceTest extends TestCase {
         queryWrapper.eq("name", "iphone 1211");
         ProductDTO qu = productMapper.selectOne(queryWrapper);
         System.out.println(qu);
+    }
+
+    @Test
+    public void getProduct() {
     }
 }

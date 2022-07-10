@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class TestController {
-    private final static Logger LOG = LoggerFactory.getLogger(TestController.class);
+public class PageController {
+    private final static Logger LOG = LoggerFactory.getLogger(PageController.class);
 
 
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)

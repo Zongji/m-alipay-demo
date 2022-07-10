@@ -1,17 +1,30 @@
 package com.demo.mvc.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
-@TableName("order")
+@TableName("e_order")
 public class OrderDTO {
-    private String tradeNo;
-    private String subject;
-    private BigDecimal amount;
+    private Long id;
+    @TableField("USER_ID")
+    private Long userId;
+    @TableField("PRODUCT_ID")
+    private Long productId;
+    @TableField("PRODUCT_CODE")
     private String productCode;
-
+    @TableField("PRICE")
+    private BigDecimal price;
+    @TableField("TOTAL_AMOUNT")
+    private BigDecimal totalAmount;
+    @TableField("ORDER_STATUS")
+    private String orderStatus;
+    @TableField("TRADE_NO")
+    private String tradeNo;
+    @TableField("SUBJECT")
+    private String subject;
 
 }

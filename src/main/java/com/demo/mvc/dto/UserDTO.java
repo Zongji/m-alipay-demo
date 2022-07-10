@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Data
-@TableName("user")
+@TableName("e_user")
 public class UserDTO {
     private Long id;
     private String name;
