@@ -14,8 +14,6 @@ public class OrderDTO {
     private Long userId;
     @TableField("PRODUCT_ID")
     private Long productId;
-    @TableField("PRODUCT_CODE")
-    private String productCode;
     @TableField("PRICE")
     private BigDecimal price;
     @TableField("TOTAL_AMOUNT")

@@ -17,7 +17,7 @@ public class PageController {
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
     public String home() {
         LOG.info("home==========");
-        return "index";
+        return "index0";
     }
 
     @ResponseBody
@@ -26,10 +26,21 @@ public class PageController {
         return num;
     }
 
-    @GetMapping("index2")
+    @GetMapping("/index2")
     public ModelAndView index2(String num) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("index");
         return modelAndView;
+    }
+
+    @GetMapping("/product/list")
+    public String list() {
+        LOG.info("list==========");
+        return "productList";
+    }
+
+    @GetMapping("/order/list")
+    public String orderList() {
+        return "orderList";
     }
 }

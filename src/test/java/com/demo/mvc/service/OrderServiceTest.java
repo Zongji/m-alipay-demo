@@ -3,6 +3,7 @@ package com.demo.mvc.service;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.demo.mvc.BaseTest;
 import com.demo.mvc.dto.OrderDTO;
 import com.demo.mvc.dto.ProductDTO;
 import com.demo.mvc.dto.UserDTO;
@@ -22,16 +23,14 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@MapperScan("com.demo.mvc.mapper")
-@Transactional
-//@Rollback
+
 @Slf4j
-public class OrderServiceTest extends TestCase {
+public class OrderServiceTest extends BaseTest {
     @Autowired
     private OrderService orderService;
     @Mock
@@ -63,7 +62,7 @@ public class OrderServiceTest extends TestCase {
 
     @Test
     public void testQueryOrders() {
-        Page<OrderDTO> page = orderService.queryOrders("", 1, 10);
-        log.info(page.getRecords().toString());
+        List<OrderDTO> list = orderService.queryOrders("1", 1, 10);
+        log.info(list.toString());
     }
 }

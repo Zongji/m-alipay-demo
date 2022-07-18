@@ -47,7 +47,6 @@ public class PaymentController extends BaseControler{
         code = StringUtils.isEmpty(code)? "A0001": code;
         ProductDTO productDTO = productService.getProductByCode(code);
 
-
         TradeDTO tradeDTO = new TradeDTO();
         tradeDTO.setAmount(productDTO.getPrice());
         tradeDTO.setProductCode(productDTO.getProductCode());

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 @Service
 public class OrderService {
     @Autowired
@@ -25,7 +27,6 @@ public class OrderService {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setUserId(userDTO.getId());
         orderDTO.setProductId(productDTO.getId());
-        orderDTO.setProductCode(productDTO.getProductCode());
         orderDTO.setTotalAmount(productDTO.getPrice());
         orderDTO.setPrice(productDTO.getPrice());
         orderDTO.setOrderStatus("NEW");
@@ -35,13 +36,13 @@ public class OrderService {
         return orderDTO;
     }
 
-    public Page<OrderDTO> queryOrders(String status, int page, int pageSize) {
+    public List<OrderDTO> queryOrders(String status, int page, int pageSize) {
         Page<OrderDTO> page1 = new Page(page, pageSize);
         QueryWrapper<OrderDTO> queryWrapper = new QueryWrapper<>();
         if (!StringUtils.isEmpty(status)){
             queryWrapper.eq("order_status", status);
         }
         page1 = orderMapper.selectPage(page1, queryWrapper);
-        return page1;
+        return page1.getRecords();
     }
 }
