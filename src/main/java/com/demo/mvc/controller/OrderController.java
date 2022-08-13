@@ -3,6 +3,7 @@ package com.demo.mvc.controller;
 import com.demo.mvc.dto.OrderDTO;
 import com.demo.mvc.dto.PageResponseVo;
 import com.demo.mvc.service.OrderService;
+import com.demo.mvc.vo.OrderRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,5 +30,11 @@ public class OrderController {
         vo.setPageSize(pageSize);
         return vo;
     }
+
+    @RequestMapping("/detail")
+    public OrderRespVo orderDetail(@RequestParam("orderId") long orderId) {
+        return orderService.queryOrderDetail(orderId);
+    }
+
 
 }

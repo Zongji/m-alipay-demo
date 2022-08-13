@@ -6,7 +6,10 @@ import com.demo.mvc.dto.OrderDTO;
 import com.demo.mvc.dto.ProductDTO;
 import com.demo.mvc.dto.UserDTO;
 import com.demo.mvc.mapper.OrderMapper;
+import com.demo.mvc.mapper.ProductMapper;
 import com.demo.mvc.utils.IdUtils;
+import com.demo.mvc.vo.OrderRespVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -18,7 +21,8 @@ import java.util.List;
 public class OrderService {
     @Autowired
     private OrderMapper orderMapper;
-
+    @Autowired
+    private ProductMapper productMapper;
 
     public OrderDTO addOrder(UserDTO userDTO, ProductDTO productDTO) {
         Assert.notNull(userDTO, "user is null");
@@ -44,5 +48,22 @@ public class OrderService {
         }
         page1 = orderMapper.selectPage(page1, queryWrapper);
         return page1.getRecords();
+    }
+
+    public OrderRespVo queryOrderDetail(long orderId) {
+        QueryWrapper<OrderDTO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", orderId);
+        OrderDTO orderDTO = orderMapper.selectOne(queryWrapper);
+        Assert.notNull(orderDTO, "order info not found");
+
+        QueryWrapper<ProductDTO> productDTOQueryWrapper = new QueryWrapper<>();
+        productDTOQueryWrapper.eq("id", orderDTO.getProductId());
+        ProductDTO productDTO = productMapper.selectOne(productDTOQueryWrapper);
+        Assert.notNull(productDTO, "product not found with id:" + orderDTO.getProductId());
+
+        OrderRespVo orderRespVo = new OrderRespVo();
+        BeanUtils.copyProperties(orderDTO, orderRespVo);
+        orderRespVo.setProductDTO(productDTO);
+        return orderRespVo;
     }
 }

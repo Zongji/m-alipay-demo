@@ -17,7 +17,7 @@ public class PageController {
     @RequestMapping(value = {"", "/"}, method = RequestMethod.GET)
     public String home() {
         LOG.info("home==========");
-        return "index0";
+        return "index";
     }
 
     @ResponseBody
