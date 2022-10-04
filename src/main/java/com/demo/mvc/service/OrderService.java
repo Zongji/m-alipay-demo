@@ -40,7 +40,7 @@ public class OrderService {
         return orderDTO;
     }
 
-    public List<OrderDTO> queryOrders(String status, int page, int pageSize) {
+    public List<OrderDTO> queryOrders(int page, int pageSize,String status) {
         Page<OrderDTO> page1 = new Page(page, pageSize);
         QueryWrapper<OrderDTO> queryWrapper = new QueryWrapper<>();
         if (!StringUtils.isEmpty(status)){

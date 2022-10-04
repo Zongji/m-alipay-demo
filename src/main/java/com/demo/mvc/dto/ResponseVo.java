@@ -1,7 +1,15 @@
 package com.demo.mvc.dto;
 
+import lombok.Data;
+
+@Data
 public class ResponseVo<T> {
     private String code;
     private String msg;
-    private T t;
+    private T data;
+
+    public ResponseVo(){
+        this.code = "0000";
+        this.msg = "ok";
+    }
 }

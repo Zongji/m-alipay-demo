@@ -31,7 +31,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/pay")
-public class PaymentController extends BaseControler{
+public class PaymentController extends BaseController {
     private final static Logger LOG = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired

@@ -18,7 +18,8 @@ public class PageResponseVo<T> {
     private List<T> list;
 
     public PageResponseVo() {
-        this.code = "0";
+        this.code = "0000";
+        this.msg = "ok";
         this.page = 1;
         this.pageSize = 10;
         this.list = new ArrayList<>();

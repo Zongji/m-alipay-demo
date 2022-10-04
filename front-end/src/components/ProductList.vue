@@ -1,34 +1,53 @@
-<template>
-    <div id="product-list">
+  <template>
+      <div cla="list">
+        <van-card v-for="item in items" :key="item.id"
+            num="2"
+            v-bind:price="item.price"
+            v-bind:desc="item.description"
+            v-bind:title="item.name"
+            origin-price="10.00"
+            thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
+            @click="toDetailPage(item)"
+          />
+      </div>    
+  </template>
 
-    </div>    
-</template>
+  <script>
+  // import axios from "axios"
+  import { Card } from 'vant';
 
-<script>
-import axios from "axios"
-export default {
-  name: 'ProductList',
-  props: {
-    msg: String
-  },
-  data(){
-    return {
-      list:[]
-    }
-  },
-  created() {
-    axios.get("/api/product/products")
-    .then(res => {
+  export default {
+    name: 'ProductList',
+    comments:{
+      Card
+    },
+    data(){
+      return {
+        items:[]
+      }
+    },
+    created() {
+      let that = this;
+      this.$axios.get("/api/product/list?page=1&pageSize=10&status=1")
+      .then(res => {
+        that.items = res.data.list;
         console.info(res.data);
-    }).catch(err => {
-        console.error(err);
-    })
+          
+      }).catch(err => {
+          console.error(err);
+      })
 
-  },
+    },
+    methods:{
+      toDetailPage: function(code) {
+        console.log(code);
+        this.$router.push("/detail")
+      }
+    },  
+  
+  }
+  </script>
 
-}
-</script>
+  <style scoped>
 
-<style scoped>
-
-</style>
+  </style>

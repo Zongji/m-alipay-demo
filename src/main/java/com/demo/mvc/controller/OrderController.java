@@ -2,6 +2,7 @@ package com.demo.mvc.controller;
 
 import com.demo.mvc.dto.OrderDTO;
 import com.demo.mvc.dto.PageResponseVo;
+import com.demo.mvc.dto.ResponseVo;
 import com.demo.mvc.service.OrderService;
 import com.demo.mvc.vo.OrderRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class OrderController {
 
     @RequestMapping("/list")
     public PageResponseVo orderList(@RequestParam("status") String status, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        List<OrderDTO> list = orderService.queryOrders(status, page, pageSize);
+        List<OrderDTO> list = orderService.queryOrders(page, pageSize, status);
         PageResponseVo vo = new PageResponseVo();
         vo.setList(list);
         vo.setPage(page);
@@ -32,8 +33,11 @@ public class OrderController {
     }
 
     @RequestMapping("/detail")
-    public OrderRespVo orderDetail(@RequestParam("orderId") long orderId) {
-        return orderService.queryOrderDetail(orderId);
+    public ResponseVo orderDetail(@RequestParam("orderId") long orderId) {
+        OrderRespVo orderRespVo = orderService.queryOrderDetail(orderId);
+        ResponseVo responseVo = new ResponseVo();
+        responseVo.setData(orderRespVo);
+        return responseVo;
     }
 
 
