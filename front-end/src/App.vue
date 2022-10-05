@@ -1,34 +1,32 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">首页</router-link> |
-      <router-link to="/product">商品列表</router-link> |
-      <router-link to="/orders">订单列表</router-link> |
-      <router-link to="/about">关于</router-link>
-    </div>
     <router-view/>
+    <van-tabbar v-model="active">
+      <van-tabbar-item icon="home-o" replace to="/">首页</van-tabbar-item>
+      <van-tabbar-item icon="goods-collect-o" replace to="/products">商品列表</van-tabbar-item>
+      <van-tabbar-item icon="orders-o" replace to="/orders">订单列表</van-tabbar-item>
+      <van-tabbar-item icon="https://b.yzcdn.cn/vant/icon-demo-1126.png" replace to="/about">我的</van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
+<script>
+import { Tabbar, TabbarItem } from 'vant';
+
+export default {
+  comments:{
+    Tabbar,
+    TabbarItem
+  },
+  data(){
+    return {
+      active: 0,
+    };
+  },
+
+}
+</script>
+
 <style>
-/* #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-} */
 </style>

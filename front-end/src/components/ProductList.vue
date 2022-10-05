@@ -13,7 +13,6 @@
   </template>
 
   <script>
-  // import axios from "axios"
   import { Card } from 'vant';
 
   export default {
@@ -39,9 +38,9 @@
 
     },
     methods:{
-      toDetailPage: function(code) {
-        console.log(code);
-        this.$router.push("/detail")
+      toDetailPage: function(item) {
+        console.log("toDetailPage:" + JSON.stringify(item));
+        this.$router.push("/detail?id="+item.id);
       }
     },  
   
