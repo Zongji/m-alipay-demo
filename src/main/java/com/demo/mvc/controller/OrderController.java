@@ -23,7 +23,7 @@ public class OrderController {
 
 
     @RequestMapping("/list")
-    public PageResponseVo orderList(@RequestParam("status") String status, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+    public PageResponseVo orderList(@RequestParam(value = "status", required = false) String status, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
         List<OrderDTO> list = orderService.queryOrders(page, pageSize, status);
         PageResponseVo vo = new PageResponseVo();
         vo.setList(list);

@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Products from '../views/Products.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import Orders from '../views/Orders.vue'
+import PayResult from  '../views/PayResult.vue'
 
 Vue.use(VueRouter)
 
@@ -37,6 +38,11 @@ const routes = [
     path:"/orders",
     name:"Orders",
     component: Orders
+  },
+  {
+    path:"/pay-result",
+    name:"PayResult",
+    component: PayResult
   },
   { path: '*', redirect: '/404' }
 ]

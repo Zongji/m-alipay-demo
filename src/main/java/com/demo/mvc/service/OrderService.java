@@ -66,4 +66,17 @@ public class OrderService {
         orderRespVo.setProductDTO(productDTO);
         return orderRespVo;
     }
+
+    public OrderDTO queryOrderByTradeNo(String tradeNo) {
+        QueryWrapper<OrderDTO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("trade_no", tradeNo);
+        OrderDTO orderDTO = orderMapper.selectOne(queryWrapper);
+        Assert.notNull(orderDTO, "order info not found");
+        return orderDTO;
+    }
+
+    public void updateOrder(OrderDTO update) {
+        orderMapper.updateById(update);
+    }
+
 }

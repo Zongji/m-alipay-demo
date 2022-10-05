@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @TableName("e_order")
@@ -24,5 +25,8 @@ public class OrderDTO {
     private String tradeNo;
     @TableField("SUBJECT")
     private String subject;
-
+    @TableField("CREATED_AT")
+    private Date createdAt;
+    @TableField("UPDATED_AT")
+    private Date updatedAt;
 }

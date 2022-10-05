@@ -65,6 +65,8 @@
           <dl class="content">
             <dt>商户订单号：</dt>
             <dd>
+              <input name="productId" hidden v-model="trade.productId"/>
+
               <input name="WIDout_trade_no" v-model="trade.tradeNo"/>
             </dd>
             <hr class="one_line">
@@ -100,7 +102,7 @@
 
 <script>
 // @ is an alias to /src
-import {Dialog, NavBar,Swipe, SwipeItem,Lazyload,Button, Col, Row  } from 'vant';
+import {Dialog, NavBar,Swipe, SwipeItem,Lazyload,Button, Col, Row,Form,Field   } from 'vant';
 
 export default {
   name: 'ProductDetail',
@@ -163,12 +165,14 @@ export default {
 
     },
     buy: function (item){
-      this.show = true;
+
       this.trade = {
         tradeNo: new Date().valueOf(),
         subject: this.itemMy.name,
-        amount: this.itemMy.amount
+        amount: this.itemMy.price,
+        productId: this.itemMy.id
       };
+      this.show = true;
     },
     buyConfirm: function (item) {
       console.info("确认购买");

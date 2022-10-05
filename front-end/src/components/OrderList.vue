@@ -1,13 +1,11 @@
 <template>
     <div cla="list">
       <van-card v-for="item in items" :key="item.id"
-          num="2"
           v-bind:price="item.price"
           v-bind:desc="item.description"
-          v-bind:title="item.name"
+          v-bind:title="item.subject"
           origin-price="10.00"
           thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-          @click="toDetailPage(item)"
         />
     </div>    
 </template>
@@ -28,7 +26,7 @@ export default {
   },
   created() {
     let that = this;
-    this.$axios.get("/api/order/list?page=1&pageSize=10&status=1")
+    this.$axios.get("/api/order/list?page=1&pageSize=10")
     .then(res => {
       that.items = res.data.list;
       console.info(res.data);
