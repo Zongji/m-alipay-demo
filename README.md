@@ -88,3 +88,25 @@ ngrock http 9090  --authtoken 20AlOclEY4SwG77NZ9EJeGzS9tL_89B8RLFiq5CbwtioVx7pA
 }
 
 ```
+
+
+## 退款
+退款请求返回
+```json
+{
+	"buyerLogonId": "ejh***@sandbox.com",
+	"buyerUserId": "2088622958603995",
+	"fundChange": "Y",
+	"gmtRefundPay": "Oct 5, 2022 9:08:55 PM",
+	"outTradeNo": "1664951073209",
+	"refundFee": "50.00",
+	"sendBackFee": "0.00",
+	"tradeNo": "2022100522001403990501989418",
+	"code": "10000",
+	"msg": "Success",
+	"body": "{\"alipay_trade_refund_response\":{\"code\":\"10000\",\"msg\":\"Success\",\"buyer_logon_id\":\"ejh***@sandbox.com\",\"buyer_user_id\":\"2088622958603995\",\"fund_change\":\"Y\",\"gmt_refund_pay\":\"2022-10-05 21:08:55\",\"out_trade_no\":\"1664951073209\",\"refund_fee\":\"50.00\",\"send_back_fee\":\"0.00\",\"trade_no\":\"2022100522001403990501989418\"},\"sign\":\"XtR4ssEXuPiBoPuh5HczDhABAlbog7kkx6SVZqH6czr1SlohifweETEpJMKmiBI5oUSx36UdIPVDRgeD/CLFupiYHO6BFuRXBso9H8cfTKFDH3TIJ3K8VD5ynlgE37JdGgKv6qHgll6sFuK1Qqq23tf1w17EDUvARUhA8r+as9bLlQ1lhuoyavxmYC9BPRRdnLhLxDtutDqNvomA0N/vOrFwHUN4/sj/a3XM1phAhD6GYtKIfZ6QI1FFHh6Qc1oL76TaALzZebfRggAeWxTbaVf0KsFvnt3hIuMFS2M1DPbZ61lD99ZpFInJuXFUuW/aGinKsIlwS7qVlpzKPywJwQ\u003d\u003d\"}",
+	"params": {
+		"biz_content": "{\"out_trade_no\":\"1664951073209\",\"refund_amount\":\"50.00\",\"out_request_no\":\"1664951073209\"}"
+	}
+}
+```

@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.demo.mvc.BaseTest;
+import com.demo.mvc.common.OrderStatusEnum;
 import com.demo.mvc.dto.OrderDTO;
 import com.demo.mvc.dto.ProductDTO;
 import com.demo.mvc.dto.UserDTO;
 import com.demo.mvc.mapper.ProductMapper;
+import com.demo.mvc.utils.GsonUtils;
 import junit.framework.TestCase;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
@@ -65,4 +67,11 @@ public class OrderServiceTest extends BaseTest {
         List<OrderDTO> list = orderService.queryOrders(1, 10, "1");
         log.info(list.toString());
     }
+
+    @Test
+    public void queryOrderByStatus() {
+        List<OrderDTO> list = orderService.queryOrderByStatus(OrderStatusEnum.CREATE.name(), 3);
+        log.info(GsonUtils.toJson(list));
+    }
+
 }

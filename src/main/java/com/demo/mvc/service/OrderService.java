@@ -43,6 +43,7 @@ public class OrderService {
     public List<OrderDTO> queryOrders(int page, int pageSize,String status) {
         Page<OrderDTO> page1 = new Page(page, pageSize);
         QueryWrapper<OrderDTO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("id");
         if (!StringUtils.isEmpty(status)){
             queryWrapper.eq("order_status", status);
         }
@@ -79,4 +80,11 @@ public class OrderService {
         orderMapper.updateById(update);
     }
 
+    public List<OrderDTO> queryOrderByStatus(String status, int batchSize) {
+        Page<OrderDTO> page1 = new Page(1, batchSize);
+        QueryWrapper<OrderDTO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_status", status);
+        page1 = orderMapper.selectPage(page1, queryWrapper);
+        return page1.getRecords();
+    }
 }

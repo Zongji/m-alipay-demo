@@ -75,7 +75,7 @@ public class PaymentController extends BaseController {
 
     @PostMapping("/submit")
     public void submit(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, AlipayApiException {
-        System.out.println("=====订单提交=======");
+        log.info("=====订单提交=======");
         OrderDTO orderDTO = paymentService.buildOrder(request);
         log.info("created order:{}", orderDTO);
         paymentService.createOrder(orderDTO);
@@ -136,35 +136,8 @@ public class PaymentController extends BaseController {
         Map<String, String> params = getPayResultParamsMap(request);
         log.info("=====payReturn:{}", GsonUtils.toJson(params));
 
-        //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
-        //商户订单号
-        String out_trade_no = request.getParameter("out_trade_no").toString();
-        log.info("内部交易号out_trade_no:{}", out_trade_no);
-
-        //支付宝交易号
-        String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"), "UTF-8");
-        log.info("支付宝交易号 trade_no:{}", trade_no);
-
-        //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
-        //计算得出通知验证结果
-        //boolean AlipaySignature.rsaCheckV1(Map<String, String> params, String publicKey, String charset, String sign_type)
-        boolean verify_result = AlipaySignature.rsaCheckV1(params,
-                AlipayConfig.ALIPAY_PUBLIC_KEY,
-                AlipayConfig.CHARSET,
-                AlipayConfig.SIGNTYPE);
-
-        String retMsg = "";
-        if (verify_result) {//验证成功
-            //////////////////////////////////////////////////////////////////////////////////////////
-            //请在这里加上商户的业务逻辑程序代码
-            //该页面可做页面美工编辑
-            retMsg = "支付成功！！<br />";
-            //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-        } else {
-            //该页面可做页面美工编辑
-            retMsg = "验证失败<br />";
-        }
-        log.info(retMsg);
+        String retMsg =  paymentService.payReturn(request, params);
+        log.info("=====payReturn res:{}", retMsg);
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("payResult");
@@ -207,34 +180,12 @@ public class PaymentController extends BaseController {
         Map<String, String> params = getPayResultParamsMap(request);
         log.info("=====payNotify:{}", GsonUtils.toJson(params));
 
-        boolean verify_result = AlipaySignature.rsaCheckV1(params,
-                AlipayConfig.ALIPAY_PUBLIC_KEY,
-                AlipayConfig.CHARSET,
-                AlipayConfig.SIGNTYPE);
-        if (verify_result) {
-            //更新支付订单到成功
-            String tradeNo = params.get("out_trade_no");
-            if (StringUtils.isEmpty(tradeNo)) {
-                log.warn("trade_no参数为空");
-                return "not ok";
-            }
-            OrderDTO orderDTO = orderService.queryOrderByTradeNo(tradeNo);
-            OrderDTO updateDB = new OrderDTO();
-            updateDB.setId(orderDTO.getId());
-            updateDB.setUpdatedAt(new Date());
-
-            String tradeStatus = params.get("trade_status");
-            log.info("trade_status:{}",tradeStatus);
-            if ("TRADE_SUCCESS".equals(tradeStatus) || "TRADE_FINISHED".equals(tradeStatus)) {
-                updateDB.setOrderStatus(OrderStatusEnum.PAID.name());
-            }else if ("TRADE_CLOSED".equals(tradeStatus)){
-                updateDB.setOrderStatus(OrderStatusEnum.PAID_TIMEOUT.name());
-            }
-            orderService.updateOrder(updateDB);
-            log.info("更新订单为支付成功 ！");
-        }
-        return "ok";
+        String res = paymentService.payNotify(params);
+        log.info("=====payNotify res:{}", res);
+        return res;
     }
+
+
 }
 
 

@@ -2,23 +2,41 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0"/>
+    <link rel="stylesheet" href="https://unpkg.com/vant@2.12/lib/index.css"/>
     <title>支付结果页面</title>
-<!--    <link rel="stylesheet" type="text/css" href="/pay.css" />-->
-    <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.3.0/weui.min.css"/>
-
 </head>
+
 <body>
-<header class="am-header">
-    <h1>支付宝手机网站支付接口快速通道(接口名：alipay.trade.wap.pay)</h1>
-</header>
-<div id="main">
-    <span th:text="${res}"/>
-    <div id="foot">
-        <ul class="foot-ul">
-            <li>支付宝版权所有 2015-2018 ALIPAY.COM</li>
-        </ul>
-    </div>
+<div id="app">
+<!--    <span th:text="${res}"/>-->
+    <van-empty :description="res">
+        <van-button type="primary" class="bottom-button" @click="toOrders">查看订单信息</van-button>
+    </van-empty>
 </div>
 </body>
+
+<script src="https://unpkg.com/vue@2.6/dist/vue.min.js"></script>
+<script src="https://unpkg.com/vant@2.12/lib/vant.min.js"></script>
+<script>
+    // 在 #app 标签下渲染一个按钮组件
+    new Vue({
+        el: '#app',
+        data:{
+            res:'支付成功！'
+        },
+        methods:{
+            toOrders: function (){
+                window.location.href="http://192.168.10.8:8080/orders";
+            }
+        }
+    });
+    // 调用函数组件，弹出一个 Toast
+    // vant.Toast('支付成功');
+    // 通过 CDN 引入时不会自动注册 Lazyload 组件
+    // 可以通过下面的方式手动注册
+    // Vue.use(vant.Lazyload);
+</script>
 </html>

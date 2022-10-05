@@ -58,39 +58,54 @@
       </van-tab>
     </van-tabs>
 
-    <van-action-sheet v-model="show" title="购买确认">
+    <van-action-sheet v-model="show" title="购买内容确认">
+      <van-form action='/pay/submit' target="_blank">
+        <input type="hidden"  v-model="trade.productId">
+        <input type="hidden"  v-model="trade.tradeNo">
+        <van-field
+            v-model="trade.subject"
+            name="商品名称"
+            label="商品名称"
+            placeholder="商品名称"
+            readonly
+        />
+        <van-field
+            v-model="trade.amount"
+            name="订单金额"
+            label="订单金额"
+            placeholder="订单金额"
+            size="large"
+            error
+            readonly
+        />
+        <div style="margin: 16px;">
+          <van-button round block type="info" native-type="submit">提交</van-button>
+        </div>
+      </van-form>
       <div class="content">商品内容</div>
       <form name=alipayment action='/pay/submit' method=post target="_blank">
         <div id="body" style="clear: left">
-          <dl class="content">
-            <dt>商户订单号：</dt>
-            <dd>
-              <input name="productId" hidden v-model="trade.productId"/>
+          <input name="productId" hidden v-model="trade.productId"/>
+          <input name="WIDout_trade_no"  hidden v-model="trade.tradeNo"/>
+          <input name="WIDbody" hidden  v-model="trade.subject"/>
 
-              <input name="WIDout_trade_no" v-model="trade.tradeNo"/>
+          <dl class="content">
+            <hr class="one_line">
+            <dt>商品名称：</dt>
+            <dd>
+              <input name="WIDsubject" readonly v-model="trade.subject"/>
             </dd>
             <hr class="one_line">
-            <dt>订单名称：</dt>
+            <dt>金额：</dt>
             <dd>
-              <input name="WIDsubject" v-model="trade.subject"/>
-            </dd>
-            <hr class="one_line">
-            <dt>付款金额：</dt>
-            <dd>
-              <input name="WIDtotal_amount" v-model="trade.amount"/>
+              <input name="WIDtotal_amount"  readonly v-model="trade.amount"/>
             </dd>
             <hr class="one_line"/>
-            <dt>商品描述：</dt>
-            <dd>
-              <input name="WIDbody" v-model="trade.subject"/>
-            </dd>
             <hr class="one_line">
-            <dt></dt>
             <dd id="btn-dd">
-                    <span class="new-btn-login-sp">
-                        <button class="new-btn-login" type="submit"
-                                style="text-align: center;">确 认</button>
-                    </span>
+              <span class="new-btn-login-sp">
+                <button class="new-btn-login" type="submit" style="text-align: center;">确 认</button>
+              </span>
             </dd>
           </dl>
         </div>
@@ -165,9 +180,8 @@ export default {
 
     },
     buy: function (item){
-
       this.trade = {
-        tradeNo: new Date().valueOf(),
+        tradeNo: "T" + new Date().valueOf(),
         subject: this.itemMy.name,
         amount: this.itemMy.price,
         productId: this.itemMy.id
