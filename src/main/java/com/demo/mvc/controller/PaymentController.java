@@ -40,12 +40,13 @@ public class PaymentController extends BaseController {
     private OrderService orderService;
     @Autowired
     private AlipayClient alipayClient;
-    
+
+    //TODO
     @GetMapping("/detail")
     public ModelAndView detail(String code) {
 
         code = StringUtils.isEmpty(code)? "A0001": code;
-        ProductDTO productDTO = productService.getProductByCode(code);
+        ProductDTO productDTO = productService.getProductById(code);
 
         TradeDTO tradeDTO = new TradeDTO();
         tradeDTO.setAmount(productDTO.getPrice());

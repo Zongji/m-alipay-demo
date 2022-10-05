@@ -33,9 +33,9 @@ public class ProductController {
     }
 
     @GetMapping("/detail")
-    public ResponseVo detail(@RequestParam("code") String code) {
-        log.info("detail code:{}", code);
-        ProductDTO productDTO = productService.getProductByCode(code);
+    public ResponseVo detail(@RequestParam("id") String id) {
+        log.info("detail id:{}", id);
+        ProductDTO productDTO = productService.getProductById(id);
 
         ResponseVo responseVo = new ResponseVo();
         responseVo.setData(productDTO);

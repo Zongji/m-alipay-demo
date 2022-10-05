@@ -7,10 +7,7 @@ import com.demo.mvc.dto.ProductDTO;
 import com.demo.mvc.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -18,10 +15,10 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
 
-    public ProductDTO getProductByCode(String code) {
-        QueryWrapper<ProductDTO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("product_code", code);
-        ProductDTO dto = productMapper.selectOne(queryWrapper);
+    public ProductDTO getProductById(String id) {
+//        QueryWrapper<ProductDTO> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("product_code", code);
+        ProductDTO dto = productMapper.selectById(id);
         return dto;
     }
 

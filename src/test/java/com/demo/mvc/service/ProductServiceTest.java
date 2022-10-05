@@ -28,7 +28,7 @@ public class ProductServiceTest extends BaseTest {
 
     @Test
     public void getProductByCode() {
-        ProductDTO productDTO = productService.getProductByCode("P1657113535414");
+        ProductDTO productDTO = productService.getProductById("P1657113535414");
         Assert.assertNotNull(productDTO);
         log.info(productDTO.toString());
     }

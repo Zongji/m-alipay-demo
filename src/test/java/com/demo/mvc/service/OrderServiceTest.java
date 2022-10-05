@@ -62,7 +62,7 @@ public class OrderServiceTest extends BaseTest {
 
     @Test
     public void testQueryOrders() {
-        List<OrderDTO> list = orderService.queryOrders("1", 1, 10);
+        List<OrderDTO> list = orderService.queryOrders(1, 10, "1");
         log.info(list.toString());
     }
 }
