@@ -43,7 +43,7 @@ public class RefundStatusJob {
                 orderService.updateRefundStatus(refundTDO);
             }
         }
-        log.info("定时任务重新发起退款执行 done!");
+        log.info("定时任务发起退款执行 done!");
     }
 
 

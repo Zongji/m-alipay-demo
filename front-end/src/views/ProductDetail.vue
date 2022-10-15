@@ -60,8 +60,9 @@
 
     <van-action-sheet v-model="show" title="购买内容确认">
       <van-form action='/pay/submit' target="_blank">
-        <input type="hidden"  v-model="trade.productId">
-        <input type="hidden"  v-model="trade.tradeNo">
+        <input name="productId" hidden v-model="trade.productId"/>
+        <input name="WIDout_trade_no"  hidden v-model="trade.tradeNo"/>
+        <input name="WIDbody" hidden  v-model="trade.subject"/>
         <van-field
             v-model="trade.subject"
             name="商品名称"
