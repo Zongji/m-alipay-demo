@@ -1,29 +1,22 @@
 package com.demo.mvc.service;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.demo.mvc.BaseTest;
 import com.demo.mvc.common.OrderStatusEnum;
 import com.demo.mvc.dto.OrderDTO;
 import com.demo.mvc.dto.ProductDTO;
+import com.demo.mvc.dto.RefundTDO;
+import com.demo.mvc.vo.ResponseVo;
 import com.demo.mvc.dto.UserDTO;
 import com.demo.mvc.mapper.ProductMapper;
 import com.demo.mvc.utils.GsonUtils;
-import junit.framework.TestCase;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -71,6 +64,15 @@ public class OrderServiceTest extends BaseTest {
     @Test
     public void queryOrderByStatus() {
         List<OrderDTO> list = orderService.queryOrderByStatus(OrderStatusEnum.CREATE.name(), 3);
+        log.info(GsonUtils.toJson(list));
+    }
+
+
+    @Test
+    public void refundApply() {
+        ResponseVo responseVo = orderService.refundApply(1577565660915830785L);
+        log.info(GsonUtils.toJson(responseVo));
+        List<RefundTDO> list = orderService.queryToRefundList();
         log.info(GsonUtils.toJson(list));
     }
 

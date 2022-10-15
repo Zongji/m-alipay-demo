@@ -1,4 +1,4 @@
-package com.demo.mvc.dto;
+package com.demo.mvc.vo;
 
 import lombok.Data;
 

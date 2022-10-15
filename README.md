@@ -115,3 +115,10 @@ ngrock http 9090  --authtoken 20AlOclEY4SwG77NZ9EJeGzS9tL_89B8RLFiq5CbwtioVx7pA
 
 
 
+2022-10-15 18:20:04.188  INFO 7128 --- [   scheduling-1] com.demo.mvc.service.PaymentService      : ====alipayTradeQuery:
+
+
+
+{"alipay_trade_refund_response":{"code":"10000","msg":"Success","buyer_logon_id":"ejh***@sandbox.com","buyer_user_id":"2088622958603995","fund_change":"Y","gmt_refund_pay":"2022-10-15 18:20:04","out_trade_no":"T1665829107360","refund_fee":"50.00","send_back_fee":"0.00","trade_no":"2022101522001403990501995122"},"sign":"KB7VCSJBeEDtbfgryMR8KaSsBI9MztqrTPVIRicXaREPs2Cili7UBb8PT/M9S/KvJnN1xHb1Gmi9h9H5XGdAjhQAK/1yFBJ1MTO6DQPtCDfV7BUuwlPoZBKlHVQM2hd6g0X2kDuTSoLmJDWqxWtD63jOFKnOo2haqnpsd9vfB9m255V1iulYrdghwcyvcbJAepma2oVqJuIr7TfBmMiz6k0w5jYzCJpErOo6ebUWDcFS3ctFki/j057/oe7PAFx15Q8E2LQt1eVqrKqB8XVHNoimx1gP7A3iptF6f5Nf0X6YawNd3GTY7y6CSYjCfyNRUWbVq513CeniGcFulPQPTQ=="}
+
+

@@ -174,7 +174,8 @@ public class PaymentController extends BaseController {
      * @return
      * @throws Exception
      */
-    @PostMapping("/pay-notify")
+    @PostMapping("/" +
+            "pay-notify")
     @ResponseBody
     public String payNotify(HttpServletRequest request, HttpServletResponse response) throws Exception {
         Map<String, String> params = getPayResultParamsMap(request);

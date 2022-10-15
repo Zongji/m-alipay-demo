@@ -12,6 +12,7 @@ import com.demo.mvc.mapper.ProductMapper;
 import com.demo.mvc.mapper.RefundMapper;
 import com.demo.mvc.utils.IdUtils;
 import com.demo.mvc.vo.OrderRespVo;
+import com.demo.mvc.vo.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +67,13 @@ public class OrderService {
         return page1.getRecords();
     }
 
+    public OrderDTO queryById(long orderId) {
+        QueryWrapper<OrderDTO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", orderId);
+        OrderDTO orderDTO = orderMapper.selectOne(queryWrapper);
+        return orderDTO;
+    }
+
     public OrderRespVo queryOrderDetail(long orderId) {
         QueryWrapper<OrderDTO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", orderId);
@@ -94,6 +103,7 @@ public class OrderService {
         update.setUpdatedAt(new Date());
         orderMapper.updateById(update);
     }
+
 
     public List<OrderDTO> queryOrderByStatus(String status, int batchSize) {
         Page<OrderDTO> page1 = new Page(1, batchSize);
@@ -149,12 +159,13 @@ public class OrderService {
         if ("TRADE_SUCCESS".equals(tradeStatus) || "TRADE_FINISHED".equals(tradeStatus)) {
             updateDB.setOrderStatus(OrderStatusEnum.PAID.name());
         }else if ("TRADE_CLOSED".equals(tradeStatus)){
-            updateDB.setOrderStatus(OrderStatusEnum.PAID_TIMEOUT.name());
+            updateDB.setOrderStatus(OrderStatusEnum.CLOSE.name());
         }
         updateOrder(updateDB);
         log.info("更新订单为支付成功 ！");
         return "ok";
     }
+
     public ResponseVo refundApply(long orderId) {
         ResponseVo responseVo = new ResponseVo();
         OrderDTO orderDTO = orderMapper.selectById(orderId);
@@ -163,16 +174,46 @@ public class OrderService {
             responseVo.setMsg("订单不存在");
             return  responseVo;
         }
+        if(!canRefund(orderDTO)) {
+            responseVo.setCode("100");
+            responseVo.setMsg("订单不允许退款");
+            return  responseVo;
+        }
 
         RefundTDO refundTDO = new RefundTDO();
         refundTDO.setOrderId(orderId);
         refundTDO.setRefundAmount(orderDTO.getTotalAmount());
         refundTDO.setRefundStatus(RefundStatusEnum.CREATE.name());
         refundTDO.setUserId(orderDTO.getUserId());
+        refundTDO.setOutRequestNo("R" + orderDTO.getTradeNo());
         refundTDO.setCreatedAt(new Date());
         refundTDO.setUpdatedAt(new Date());
         refundMapper.insert(refundTDO);
 
         return responseVo;
+    }
+
+    private boolean canRefund(OrderDTO orderDTO) {
+        if (orderDTO.getOrderStatus().equals(OrderStatusEnum.PAID.name())) {
+            return true;
+        }
+        return false;
+    }
+
+    public List<RefundTDO> queryToRefundList() {
+        List<String> statusList = new ArrayList<>();
+        statusList.add(RefundStatusEnum.CREATE.name());
+        statusList.add(RefundStatusEnum.PAID_FAIL.name());
+        statusList.add(RefundStatusEnum.PAID_TIMEOUT.name());
+        QueryWrapper<RefundTDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("refund_status", statusList);
+        List<RefundTDO> list = refundMapper.selectList(queryWrapper);
+        return list;
+    }
+
+
+    public void updateRefundStatus(RefundTDO refundTDO) {
+        refundTDO.setUpdatedAt(new Date());
+        refundMapper.updateById(refundTDO);
     }
 }

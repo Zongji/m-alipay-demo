@@ -12,6 +12,7 @@ import com.alipay.api.response.AlipayTradeRefundResponse;
 import com.demo.mvc.common.OrderStatusEnum;
 import com.demo.mvc.config.AlipayConfig;
 import com.demo.mvc.dto.OrderDTO;
+import com.demo.mvc.dto.RefundTDO;
 import com.demo.mvc.mapper.OrderMapper;
 import com.demo.mvc.utils.GsonUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -112,11 +113,6 @@ public class PaymentService {
         return retMsg;
     }
 
-
-    public void alipayRefund() {
-
-    }
-
     /**
      * 请求支付宝系统查询订单
      * @param outTradeNo
@@ -159,8 +155,9 @@ public class PaymentService {
         AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();//创建API对应的request类
         Map<String, String> params = new HashMap<>();
         params.put("out_trade_no", orderDTO.getTradeNo());
-        params.put("out_request_no", orderDTO.getTradeNo());
+        params.put("out_request_no", "R" + orderDTO.getTradeNo()+"_"+ System.nanoTime());
         params.put("refund_amount", orderDTO.getTotalAmount() + "");
+        log.info("api param:{}", GsonUtils.toJson(params));
         request.setBizContent(GsonUtils.toJson(params));
 //       request.setBizContent("{" +
                 //"\"out_trade_no\":\"20150320010101001\"," +

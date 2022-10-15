@@ -1,4 +1,4 @@
-package com.demo.mvc.dto;
+package com.demo.mvc.vo;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;

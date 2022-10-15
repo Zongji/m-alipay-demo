@@ -1,8 +1,8 @@
 package com.demo.mvc.controller;
 
-import com.demo.mvc.dto.PageResponseVo;
+import com.demo.mvc.vo.PageResponseVo;
 import com.demo.mvc.dto.ProductDTO;
-import com.demo.mvc.dto.ResponseVo;
+import com.demo.mvc.vo.ResponseVo;
 import com.demo.mvc.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

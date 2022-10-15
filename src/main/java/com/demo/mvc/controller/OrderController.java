@@ -1,14 +1,12 @@
 package com.demo.mvc.controller;
 
 import com.demo.mvc.dto.OrderDTO;
-import com.demo.mvc.dto.PageResponseVo;
-import com.demo.mvc.dto.ResponseVo;
+import com.demo.mvc.vo.PageResponseVo;
+import com.demo.mvc.vo.ResponseVo;
 import com.demo.mvc.service.OrderService;
 import com.demo.mvc.vo.OrderRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 

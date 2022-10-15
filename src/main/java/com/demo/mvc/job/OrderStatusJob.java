@@ -27,16 +27,16 @@ public class OrderStatusJob {
     @Autowired
     private PaymentService paymentService;
 
-    @Scheduled(cron = "0 0/1 * * * ?")
+//    @Scheduled(cron = "0 0/1 * * * ?")
     public void someTask() {
         //...
-        log.info("定时任务实行:{}", new Date());
+        log.info("定时任务订单支付状态处理:{}", new Date());
         List<OrderDTO> list = orderService.queryOrderByStatus(OrderStatusEnum.CREATE.name(), 2);
         for (OrderDTO orderDTO : list) {
             AlipayTradeQueryResponse response = paymentService.alipayTradeQuery(orderDTO.getTradeNo());
             orderService.updateOrderStatusByAlipayStatus(orderDTO, response);
         }
-        log.info("定时任务实行 done!");
+        log.info("定时任务订单支付状态处理 done!");
 
     }
 }
