@@ -34,7 +34,7 @@ public class OrderStatusJob {
         List<OrderDTO> list = orderService.queryOrderByStatus(OrderStatusEnum.CREATE.name(), 2);
         for (OrderDTO orderDTO : list) {
             AlipayTradeQueryResponse response = paymentService.alipayTradeQuery(orderDTO.getTradeNo());
-            paymentService.updateOrderStatusByAlipayStatus(orderDTO, response);
+            orderService.updateOrderStatusByAlipayStatus(orderDTO, response);
         }
         log.info("定时任务实行 done!");
 

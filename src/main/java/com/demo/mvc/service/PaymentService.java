@@ -1,9 +1,9 @@
 package com.demo.mvc.service;
 
+
 import cn.hutool.core.date.DateUtil;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
-import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeQueryRequest;
 import com.alipay.api.request.AlipayTradeRefundRequest;
@@ -18,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import org.thymeleaf.util.DateUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -36,10 +35,6 @@ public class PaymentService {
     private OrderService orderService;
     @Autowired
     private AlipayClient alipayClient;
-
-    public void createOrder(OrderDTO newOrder) {
-        int i = orderMapper.insert(newOrder);
-    }
 
 
     public OrderDTO buildOrder(HttpServletRequest request) throws UnsupportedEncodingException {
@@ -77,30 +72,12 @@ public class PaymentService {
                 AlipayConfig.CHARSET,
                 AlipayConfig.SIGNTYPE);
         if (verify_result) {
-            //更新支付订单到成功
-            String tradeNo = params.get("out_trade_no");
-            if (StringUtils.isEmpty(tradeNo)) {
-                log.warn("trade_no参数为空");
-                return "not ok";
-            }
-            OrderDTO orderDTO = orderService.queryOrderByTradeNo(tradeNo);
-            OrderDTO updateDB = new OrderDTO();
-            updateDB.setId(orderDTO.getId());
-            updateDB.setUpdatedAt(new Date());
-
-            String tradeStatus = params.get("trade_status");
-            log.info("trade_status:{}",tradeStatus);
-            if ("TRADE_SUCCESS".equals(tradeStatus) || "TRADE_FINISHED".equals(tradeStatus)) {
-                updateDB.setOrderStatus(OrderStatusEnum.PAID.name());
-            }else if ("TRADE_CLOSED".equals(tradeStatus)){
-                updateDB.setOrderStatus(OrderStatusEnum.PAID_TIMEOUT.name());
-            }
-            orderService.updateOrder(updateDB);
-            log.info("更新订单为支付成功 ！");
-            return "ok";
+            return orderService.updateOrderStatus(params);
         }
         return "not ok";
     }
+
+
 
     public String payReturn(HttpServletRequest request, Map<String, String> params) throws UnsupportedEncodingException, AlipayApiException {
         //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
@@ -201,34 +178,4 @@ public class PaymentService {
         return null;
     }
 
-
-    public void updateOrderStatusByAlipayStatus(OrderDTO orderDTO, AlipayTradeQueryResponse response) {
-        if (response == null ||orderDTO == null) {
-            log.info("params is null");
-            return;
-        }
-        OrderDTO update = new OrderDTO();
-        update.setId(orderDTO.getId());
-        update.setUpdatedAt(new Date());
-
-        //支付宝系统记录不存在
-        if (response.getCode().equals("40004")) {
-            log.warn("trade not found in alipay, tradeNo:{}, responseBody:{}", response.getTradeNo(), response.getBody());
-            if (DateUtil.offsetMinute(orderDTO.getCreatedAt(), 2).before(new Date()))  {
-                //订单过期
-                update.setOrderStatus(OrderStatusEnum.CLOSE.name());
-                orderService.updateOrder(update);
-            }
-            return;
-        }
-
-        String tradeStatus = response.getTradeStatus();
-        if ("TRADE_SUCCESS".equals(tradeStatus) || "TRADE_FINISHED".equals(tradeStatus)) {
-            update.setOrderStatus(OrderStatusEnum.PAID.name());
-        }else {
-            update.setOrderStatus(OrderStatusEnum.PAID_TIMEOUT.name());
-        }
-        orderService.updateOrder(update);
-        log.info("update status success!, trade_no:{}", orderDTO.getTradeNo());
-    }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @Configuration
 @EnableScheduling
-public class RefundRetryJob {
+public class RefundStatusJob {
     @Autowired
     private OrderService orderService;
     @Autowired

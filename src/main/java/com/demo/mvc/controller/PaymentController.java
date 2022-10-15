@@ -78,7 +78,7 @@ public class PaymentController extends BaseController {
         log.info("=====订单提交=======");
         OrderDTO orderDTO = paymentService.buildOrder(request);
         log.info("created order:{}", orderDTO);
-        paymentService.createOrder(orderDTO);
+        orderService.createOrder(orderDTO);
 
         // 超时时间 可空
         String timeout_express = "2m";

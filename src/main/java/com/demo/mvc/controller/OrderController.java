@@ -7,10 +7,7 @@ import com.demo.mvc.service.OrderService;
 import com.demo.mvc.vo.OrderRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -22,7 +19,8 @@ public class OrderController {
     private OrderService orderService;
 
 
-    @RequestMapping("/list")
+
+    @GetMapping("/list")
     public PageResponseVo orderList(@RequestParam(value = "status", required = false) String status, @RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
         List<OrderDTO> list = orderService.queryOrders(page, pageSize, status);
         PageResponseVo vo = new PageResponseVo();
@@ -32,7 +30,7 @@ public class OrderController {
         return vo;
     }
 
-    @RequestMapping("/detail")
+    @GetMapping("/detail")
     public ResponseVo orderDetail(@RequestParam("orderId") long orderId) {
         OrderRespVo orderRespVo = orderService.queryOrderDetail(orderId);
         ResponseVo responseVo = new ResponseVo();
@@ -40,5 +38,14 @@ public class OrderController {
         return responseVo;
     }
 
+    /**
+     * 退款申请
+     * @return
+     */
+    @PostMapping("/refund-apply")
+    public ResponseVo refundApply(@RequestParam("orderId") long orderId) {
+        ResponseVo responseVo = orderService.refundApply(orderId);
+        return responseVo;
+    }
 
 }
